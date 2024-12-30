@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mgmt-app-deployment
+  labels:
+    app: mgmt-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mgmt-app
+  template:
+    metadata:
+      labels:
+        app: mgmt-app
+    spec:
+      containers:
+        - name: mgmt-app-container
+          image: lorenzhohmann/mgmt-container:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 22
+          env:
+            - name: ROOT_PASSWORD
+              value: 'YOUR_SUPER_SECURE_PASSWORD'
+          volumeMounts:
+            - name: certs-volume
+              mountPath: /root/certs
+              readOnly: true
+            - name: kubeconfig-volume
+              mountPath: /root/.kube/config
+              subPath: root_kubeconfig.yaml
+              readOnly: true
+      volumes:
+        - name: certs-volume
+          secret:
+            secretName: mgmt-certs
+        - name: kubeconfig-volume
+          secret:
+            secretName: mgmt-kubeconfig
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mgmt-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: mgmt-app
+  ports:
+    - protocol: TCP
+      port: 22
+      targetPort: 22
