@@ -12,14 +12,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-COPY create_new_user.sh /root/create_new_user.sh
-RUN chmod +x /root/create_new_user.sh
+COPY create_user_cert.sh /root/create_user_cert.sh
+RUN chmod +x /root/create_user_cert.sh
 
 COPY setup_k8s.sh /root/setup_k8s.sh
 RUN chmod +x /root/setup_k8s.sh
 
-COPY undeploy_namespace.sh /root/undeploy_namespace.sh
-RUN chmod +x /root/undeploy_namespace.sh
+COPY undeploy_k8s.sh /root/undeploy_k8s.sh
+RUN chmod +x /root/undeploy_k8s.sh
 
 COPY entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh

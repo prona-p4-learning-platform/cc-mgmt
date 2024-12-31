@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# settings
+certificates_dir="user_certificates"
+
 # read namespace from parameter
 namespace=$1
 
@@ -12,6 +15,13 @@ fi
 # check if role-template-yaml exists
 if [ ! -f role-template.yaml ]; then
   echo "role-template.yaml does not exist"
+  exit 1
+fi
+
+# check if the k8s namespace already exists
+k8s_namespace=$(kubectl get namespace $namespace --no-headers --output=custom-columns=NAME:.metadata.name 2>/dev/null)
+if [ ! -z "$k8s_namespace" ]; then
+  echo "K8s namespace already exists"
   exit 1
 fi
 
