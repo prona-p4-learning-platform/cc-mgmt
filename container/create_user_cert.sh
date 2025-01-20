@@ -41,7 +41,7 @@ cat $certificates_dir/$username.crt | base64 -w 0
 echo -n "--------------------"
 
 # Print the private key as bas64 encoded string
-cat $certificates_dir/$username.key | base64 -w0
+cat $certificates_dir/$username.key | base64 -w 0
 
 # remove ca.srl file
 rm ca.srl

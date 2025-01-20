@@ -15,6 +15,9 @@ RUN sed -i 's/^#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
 COPY create_user_cert.sh /root/create_user_cert.sh
 RUN chmod +x /root/create_user_cert.sh
 
+COPY get_user_cert.sh /root/get_user_cert.sh
+RUN chmod +x /root/get_user_cert.sh
+
 COPY setup_k8s.sh /root/setup_k8s.sh
 RUN chmod +x /root/setup_k8s.sh
 
