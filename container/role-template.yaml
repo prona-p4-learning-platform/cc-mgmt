@@ -49,3 +49,32 @@ roleRef:
   kind: Role
   name: all-access
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mgmt-app-quota
+  namespace: %PLACEHOLDER%
+spec:
+  hard:
+    pods: '5'
+    services: '2'
+    requests.cpu: '4'
+    requests.memory: 4Gi
+    limits.cpu: '4'
+    limits.memory: 4Gi
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mgmt-app-limitrange
+  namespace: %PLACEHOLDER%
+spec:
+  limits:
+    - default:
+        memory: 512Mi
+        cpu: 500m
+      defaultRequest:
+        memory: 512Mi
+        cpu: 500m
+      type: Container
