@@ -57,8 +57,8 @@ metadata:
   namespace: %PLACEHOLDER%
 spec:
   hard:
-    pods: '5'
-    services: '2'
+    pods: '7'
+    services: '5'
     requests.cpu: '4'
     requests.memory: 4Gi
     limits.cpu: '4'
